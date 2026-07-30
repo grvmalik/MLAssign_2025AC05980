@@ -557,5 +557,3 @@ elif page == "About":
     Last Updated: 2026-07-29
     """)
 
-st.markdown("---")
-st.markdown("### 📝 Assignment 2 - BITS Pilani | M.Tech (AIML/DSE)")
