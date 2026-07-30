@@ -49,7 +49,7 @@ st.markdown("""
 
 # Title and description
 st.title("🤖 Machine Learning Classification Models")
-st.markdown("### Breast Cancer Classification - BITS Pilani Assignment")
+st.markdown("### Breast Cancer Classification - ML Assignment")
 st.markdown("---")
 
 # Sidebar
