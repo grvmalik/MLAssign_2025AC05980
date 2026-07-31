@@ -137,18 +137,18 @@ def train_models(X_train, X_test, y_train, y_test):
 
 # Page: Home
 if page == "Home":
-    st.markdown("## 🏠 Welcome to ML Classification Assignment")
+    st.markdown("## Welcome to ML Classification Assignment")
     
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.info("**📚 Dataset:** Breast Cancer Classification\n- Instances: 569\n- Features: 30")
+        st.info("**Dataset:** Breast Cancer Classification\n- Instances: 569\n- Features: 30")
     
     with col2:
-        st.warning("**🤖 Models:** 5 Classification Algorithms\n- Logistic Regression\n- Decision Tree")
+        st.warning("**Models:** 5 Classification Algorithms\n- Logistic Regression\n- Decision Tree")
     
     with col3:
-        st.success("**📊 Metrics:** 6 Evaluation Metrics\n- Accuracy, AUC, Precision\n- Recall, F1, MCC")
+        st.success("**Metrics:** 6 Evaluation Metrics\n- Accuracy, AUC, Precision\n- Recall, F1, MCC")
     
     st.markdown("---")
     
@@ -164,18 +164,18 @@ if page == "Home":
     5. **Detailed Analysis** - View confusion matrices and classification reports
     
     ### Features
-    - 📊 Upload and visualize CSV data
-    - 🤖 Train multiple ML models with one click
-    - 📈 Compare model performance in detail
-    - 🎯 Make predictions on test data
-    - 📋 View comprehensive metrics and reports
+    1. Upload and visualize CSV data
+    2. Train multiple ML models with one click
+    3. Compare model performance in detail
+    4. Make predictions on test data
+    5. View comprehensive metrics and reports
     
     Use the sidebar to navigate through different sections!
     """)
 
 # Page: Dataset
 elif page == "Dataset":
-    st.markdown("## 📚 Dataset Overview")
+    st.markdown("##Dataset Overview")
     
     X, y, data = load_data()
     
@@ -220,17 +220,17 @@ elif page == "Dataset":
     
     # Upload CSV option
     st.markdown("---")
-    st.subheader("📤 Upload Test Data")
+    st.subheader("Upload Test Data")
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file is not None:
         test_df = pd.read_csv(uploaded_file)
-        st.success("✓ File uploaded successfully!")
+        st.success("File uploaded successfully!")
         st.write(f"Shape: {test_df.shape}")
         st.dataframe(test_df.head(), use_container_width=True)
 
 # Page: Model Training
 elif page == "Model Training":
-    st.markdown("## 🤖 Model Training")
+    st.markdown("## Model Training")
     
     X, y, _ = load_data()
     
@@ -252,7 +252,7 @@ elif page == "Model Training":
     models, metrics, predictions, probabilities = train_models(X_train, X_test, y_train, y_test)
     
     progress_bar.progress(100)
-    status_text.success("✓ All models trained successfully!")
+    status_text.success("All models trained successfully!")
     
     st.markdown("---")
     
@@ -285,7 +285,7 @@ elif page == "Model Training":
 
 # Page: Results Comparison
 elif page == "Results Comparison":
-    st.markdown("## 📊 Model Comparison")
+    st.markdown("## Model Comparison")
     
     X, y, _ = load_data()
     X_train, X_test, y_train, y_test = train_test_split(
@@ -298,7 +298,7 @@ elif page == "Results Comparison":
     models, metrics, predictions, _ = train_models(X_train, X_test, y_train, y_test)
     
     # Metrics Table
-    st.subheader("📈 Metrics Comparison Table")
+    st.subheader("Metrics Comparison Table")
     metrics_df = pd.DataFrame(metrics).T
     metrics_df = metrics_df[['Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'MCC']]
     
@@ -308,7 +308,7 @@ elif page == "Results Comparison":
     st.markdown("---")
     
     # Charts
-    st.subheader("📊 Performance Charts")
+    st.subheader("Performance Charts")
     
     fig, axes = plt.subplots(2, 3, figsize=(16, 10))
     fig.suptitle('Model Performance Comparison', fontsize=16, fontweight='bold')
@@ -339,7 +339,7 @@ elif page == "Results Comparison":
     st.markdown("---")
     
     # Confusion Matrices
-    st.subheader("🔄 Confusion Matrices")
+    st.subheader("Confusion Matrices")
     
     fig, axes = plt.subplots(2, 3, figsize=(16, 10))
     fig.suptitle('Confusion Matrices for All Models', fontsize=16, fontweight='bold')
@@ -365,7 +365,7 @@ elif page == "Results Comparison":
 
 # Page: Predictions
 elif page == "Predictions":
-    st.markdown("## 🎯 Make Predictions")
+    st.markdown("## Make Predictions")
     
     X, y, _ = load_data()
     X_train, X_test, y_train, y_test = train_test_split(
@@ -383,7 +383,7 @@ elif page == "Predictions":
     st.markdown("---")
     
     # Display metrics for selected model
-    st.subheader(f"📊 {selected_model} - Metrics")
+    st.subheader(f"{selected_model} - Metrics")
     
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -404,7 +404,7 @@ elif page == "Predictions":
     st.markdown("---")
     
     # Classification Report
-    st.subheader("📋 Classification Report")
+    st.subheader("Classification Report")
     y_pred = predictions[selected_model]
     report = classification_report(y_test, y_pred, target_names=['Malignant', 'Benign'])
     st.text(report)
@@ -412,7 +412,7 @@ elif page == "Predictions":
     st.markdown("---")
     
     # Confusion Matrix
-    st.subheader("🔄 Confusion Matrix")
+    st.subheader("Confusion Matrix")
     cm = confusion_matrix(y_test, y_pred)
     
     fig, ax = plt.subplots(figsize=(8, 6))
@@ -427,7 +427,7 @@ elif page == "Predictions":
 
 # Page: About
 elif page == "About":
-    st.markdown("## ℹ️ About This Application")
+    st.markdown("## About This Application")
     
     st.markdown("""
     ### Machine Learning Classification Assignment
@@ -516,12 +516,11 @@ elif page == "About":
     All code, models, and data are available on GitHub.
     
     **Files Included:**
-    - ML_Classification_Assignment.ipynb (Training notebook)
+    - ML_Assignment_2.ipynb (Training notebook)
     - app.py (Streamlit application)
     - requirements.txt (Python dependencies)
     - README.md (Complete documentation)
     - test_data.csv (Test dataset)
-    - model_metrics.json (Metrics export)
     
     ---
     
@@ -533,27 +532,5 @@ elif page == "About":
     4. Use the **Predictions** page to analyze individual model predictions
     5. Upload your own CSV data to make predictions
     
-    ---
-    
-    ### Deployment
-    
-    This application is deployed on Streamlit Community Cloud and can be accessed from anywhere!
-    
-    **Live Application Link:** [Your Streamlit App URL]
-    
-    ---
-    
-    ### Contact & Support
-    
-    For questions or issues:
-    - Check the README.md in the GitHub repository
-    - Review the Jupyter notebook for detailed explanations
-    - Examine the source code in the repository
-    
-    ---
-    
-    **Assignment Status:** ✓ Complete and Ready for Submission
-    
-    Last Updated: 2026-07-29
     """)
 
