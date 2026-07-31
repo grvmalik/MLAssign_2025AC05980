@@ -40,17 +40,17 @@ The dataset contains 30 features representing diagnostic measurements such as:
 
 ## GitHub Repository Link
 
-**Repository:** [grvmalik/ML_Assignment_2](https://github.com/grvmalik/ML_Assignment_2)
+**Repository:** [grvmalik/MLAssign_2025AC05980](https://github.com/grvmalik/MLAssign_2025AC05980)
 
 **Repository Contents:**
 ```
 ML-Classification-Assignment/
-├── app.py                                 # Streamlit web application
-├── requirements.txt                       # Project dependencies
-├── README.md                              # This file
-├── test_data.csv                          # Test dataset with predictions
-└── model/                                 # Directory for saved models
-    ├── ML_Assignment_2.ipynb              # notebook file for all five models
+├── app.py                                      # Streamlit web application
+├── requirements.txt                            # Project dependencies
+├── README.md                                   # This file
+├── test_data.csv                               # Test dataset with predictions
+└── model/                                      # Directory for saved models
+    ├── ML_Assignment_2025AC05980.ipynb         # notebook file for all five models
 ```
 
 ## Models Used
@@ -167,7 +167,7 @@ Test dataset containing:
 - Actual target labels
 - Predictions from all 5 models
 
-# 4. **model/ML_Assignment_2.ipynb**
+# 4. **model/ML_Assignment_2025AC05980.ipynb**
 Main Jupyter notebook containing:
 - Complete data loading and preprocessing
 - Training of all 5 models
