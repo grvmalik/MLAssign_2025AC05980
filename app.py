@@ -53,8 +53,8 @@ st.markdown("### Breast Cancer Classification - ML Assignment")
 st.markdown("---")
 
 # Sidebar
-st.topbar.title("Navigation")
-page = st.topbar.radio(
+st.sidebar.title("Navigation")
+page = st.sidebar.radio(
     "Select Page:",
     ["Home", "Dataset", "Model Training", "Results Comparison", "Predictions", "About"]
 )
