@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn.datasets import load_breast_cancer
+#from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -62,10 +62,15 @@ page = st.sidebar.radio(
 # Load and prepare data
 @st.cache_data
 def load_data():
-    data = load_breast_cancer()
-    X = pd.DataFrame(data.data, columns=data.feature_names)
-    y = pd.Series(data.target, name='target')
+    data = pd.read_csv('breast_cancer.csv')
+    feature_cols = [col for col in data.columns if col not in ['target', 'diagnosis']]
+    X = data[feature_cols]
+    y = data['target']
     return X, y, data
+    #data = load_breast_cancer()
+    #X = pd.DataFrame(data.data, columns=data.feature_names)
+    #y = pd.Series(data.target, name='target')
+    #return X, y, data
 
 @st.cache_resource
 def train_models(X_train, X_test, y_train, y_test):
