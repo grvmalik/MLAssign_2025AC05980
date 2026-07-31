@@ -53,7 +53,7 @@ st.markdown("### Breast Cancer Classification - ML Assignment")
 st.markdown("---")
 
 # Sidebar
-st.sidebar.title("📊 Navigation")
+st.sidebar.title("Navigation")
 page = st.sidebar.radio(
     "Select Page:",
     ["Home", "Dataset", "Model Training", "Results Comparison", "Predictions", "About"]
@@ -311,7 +311,7 @@ elif page == "Results Comparison":
     st.subheader("Performance Charts")
     
     fig, axes = plt.subplots(2, 3, figsize=(16, 10))
-    fig.suptitle('Model Performance Comparison', fontsize=16, fontweight='bold')
+    fig.suptitle('Model Performance Comparison\n', fontsize=16, fontweight='bold')
     
     metrics_to_plot = ['Accuracy', 'AUC', 'Precision', 'Recall', 'F1', 'MCC']
     
@@ -342,7 +342,7 @@ elif page == "Results Comparison":
     st.subheader("Confusion Matrices")
     
     fig, axes = plt.subplots(2, 3, figsize=(16, 10))
-    fig.suptitle('Confusion Matrices for All Models', fontsize=16, fontweight='bold')
+    fig.suptitle('Confusion Matrices for All Models\n', fontsize=16, fontweight='bold')
     
     model_list = list(models.keys())
     for idx, model_name in enumerate(model_list):
