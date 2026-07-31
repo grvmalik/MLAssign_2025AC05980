@@ -1,8 +1,12 @@
 # Machine Learning Classification Models - Assignment
 
+- **Assignment:** Machine Learning - Assignment 2
+- **Name:** Gaurav Malik
+- **BITS Id:** 2025AC05980
+
 ## Problem Statement
 
-The objective of this assignment is to implement and evaluate multiple machine learning classification models on a real-world medical dataset. The models will be trained on the **Breast Cancer Classification** dataset to predict whether a tumor is malignant (cancerous) or benign (non-cancerous) based on various diagnostic measurements.
+The objective of this assignment is to implement and evaluate multiple machine learning classification models on a real-world medical dataset. The models will be trained on the "Breast Cancer Classification" dataset to predict whether a tumor is malignant (cancerous) or benign (non-cancerous) based on various diagnostic measurements.
 
 This assignment demonstrates the complete machine learning pipeline: data loading, preprocessing, model training, evaluation, and deployment through an interactive web application.
 
@@ -123,30 +127,20 @@ ML-Classification-Assignment/
 **Overall Winner for this dataset:** **Random Forest (Ensemble)** - Best AUC (0.9941), balanced metrics, robust to overfitting, and most suitable for real-world deployment.
 
 ---
-
-## Data Preprocessing
-
-1. **Data Loading:** Breast Cancer dataset loaded from sklearn
-2. **Train-Test Split:** 80-20 split with stratification
-3. **Feature Scaling:** StandardScaler applied (zero mean, unit variance)
-4. **Handling Imbalance:** Dataset is reasonably balanced (62.7% vs 37.3%)
-5. **No Missing Values:** Dataset is clean
-
 ## Model Training Results
 
 All models were trained on the training set (455 samples) and evaluated on test set (114 samples).
 
 ### Key Findings:
-- ✓ All models achieved >92% accuracy
-- ✓ High AUC scores (>0.92) indicate excellent class separation
-- ✓ Random Forest provides best balance of metrics
-- ✓ Feature scaling was crucial for KNN and Logistic Regression
-- ✓ No significant overfitting observed
+- All models achieved >92% accuracy
+- High AUC scores (>0.92) indicate excellent class separation
+- Random Forest provides best balance of metrics
+- Feature scaling was crucial for KNN and Logistic Regression
+- No significant overfitting observed
 
 ## Files Description
 
-
-### 1. **app.py**
+# 1. **app.py**
 Streamlit web application with:
 - Dataset upload functionality
 - Model selection dropdown
@@ -155,25 +149,25 @@ Streamlit web application with:
 - Classification reports
 - Interactive predictions
 
-### 2. **requirements.txt**
+# 2. **requirements.txt**
 Python package dependencies:
 ```
-streamlit==1.28.1
-scikit-learn==1.3.2
-numpy==1.24.3
-pandas==1.5.3
-matplotlib==3.7.2
-seaborn==0.12.2
+streamlit
+scikit-learn
+numpy
+pandas
+matplotlib
+seaborn
 ```
 
-### 3. **test_data.csv**
+# 3. **test_data.csv**
 Test dataset containing:
 - 114 test samples
 - 30 feature columns
 - Actual target labels
 - Predictions from all 5 models
 
-### 4. **model/ML_Assignment_2.ipynb**
+# 4. **model/ML_Assignment_2.ipynb**
 Main Jupyter notebook containing:
 - Complete data loading and preprocessing
 - Training of all 5 models
@@ -181,38 +175,4 @@ Main Jupyter notebook containing:
 - Visualizations (performance charts, confusion matrices)
 - Test data generation
 - Ready to run on BITS Virtual Lab
-
-## How to Run
-
-### Local Execution:
-```bash
-# Clone the repository
-git clone https://github.com/your-username/ML-Classification-Assignment.git
-cd ML-Classification-Assignment
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the Jupyter notebook
-jupyter notebook ML_Classification_Assignment.ipynb
-
-# Run the Streamlit app
-streamlit run app.py
-```
-
-### Online (Streamlit Cloud):
-1. Push repository to GitHub
-2. Go to https://streamlit.io/cloud
-3. Sign in with GitHub account
-4. Click "New App" and select the repository
-5. Deploy and share the live link
-
-
-
-## Student Information
-
-- **Assignment:** Machine Learning - Assignment 2
-- **Name:** Gaurav Malik
-- **BITS Id:** 2025AC05980
-
 
