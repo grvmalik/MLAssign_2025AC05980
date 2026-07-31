@@ -9,7 +9,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-#from sklearn.datasets import load_breast_cancer
+from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
@@ -62,15 +62,10 @@ page = st.sidebar.radio(
 # Load and prepare data
 @st.cache_data
 def load_data():
-    data = pd.read_csv('breast_cancer.csv')
-    feature_cols = [col for col in data.columns if col not in ['target', 'diagnosis']]
-    X = data[feature_cols]
-    y = data['target']
+    data = load_breast_cancer()
+    X = pd.DataFrame(data.data, columns=data.feature_names)
+    y = pd.Series(data.target, name='target')
     return X, y, data
-    #data = load_breast_cancer()
-    #X = pd.DataFrame(data.data, columns=data.feature_names)
-    #y = pd.Series(data.target, name='target')
-    #return X, y, data
 
 @st.cache_resource
 def train_models(X_train, X_test, y_train, y_test):
@@ -435,7 +430,7 @@ elif page == "About":
     st.markdown("## About This Application")
     
     st.markdown("""
-    ### Machine Learning Classification Assignment
+    ### Machine Learning Assignment
     
     ---
     
@@ -494,16 +489,6 @@ elif page == "About":
     
     ---
     
-    ### Technology Stack
-    
-    - **Language:** Python 3.8+
-    - **ML Framework:** scikit-learn
-    - **Web Framework:** Streamlit
-    - **Data Processing:** pandas, numpy
-    - **Visualization:** matplotlib, seaborn
-    
-    ---
-    
     ### Features
     
     Dataset exploration and visualization
@@ -526,16 +511,6 @@ elif page == "About":
     - requirements.txt (Python dependencies)
     - README.md (Complete documentation)
     - test_data.csv (Test dataset)
-    
-    ---
-    
-    ### How to Use
-    
-    1. Use the **Dataset** page to explore data
-    2. Use the **Model Training** page to train all models
-    3. Use the **Results Comparison** page to compare performance
-    4. Use the **Predictions** page to analyze individual model predictions
-    5. Upload your own CSV data to make predictions
     
     """)
 
