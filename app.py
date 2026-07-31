@@ -506,7 +506,7 @@ elif page == "About":
     All code, models, and data are available on GitHub.
     
     **Files Included:**
-    - ML_Assignment_2.ipynb (Training notebook)
+    - ML_Assignment_2025AC05980.ipynb (Training notebook)
     - app.py (Streamlit application)
     - requirements.txt (Python dependencies)
     - README.md (Complete documentation)
