@@ -396,12 +396,9 @@ elif page == "Predictions":
     st.markdown("---")
 
     st.subheader("Classification Report")
-    y_pred_split = predictions[selected_model]
-    report_dict = classification_report(
-        y_test, y_pred_split, target_names=['Malignant', 'Benign'], output_dict=True
-    )
-    report_df = pd.DataFrame(report_dict).transpose().round(3)
-    st.dataframe(report_df, use_container_width=True)
+    y_pred = predictions[selected_model]
+    report = classification_report(y_test, y_pred, target_names=['Malignant', 'Benign'])
+    st.code(report, language=None)
 
     st.markdown("---")
 
