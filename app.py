@@ -439,10 +439,7 @@ elif page == "Predictions":
             st.error(f"Uploaded file is missing expected feature columns: {missing_cols}")
             st.stop()
 
-        if extra_cols:
-            st.warning(f"Ignoring unexpected extra columns: {extra_cols}")
-
-        X_new = new_df[X_train.columns]  # keep only expected features, correct order
+        X_new = new_df[X_train.columns] 
 
         X_new_scaled = scaler.transform(X_new)
         model = models[selected_model]
@@ -454,12 +451,6 @@ elif page == "Predictions":
         st.markdown("### Prediction Results")
         result_df = new_df.copy()
         result_df['Prediction'] = ['Malignant' if p == 0 else 'Benign' for p in y_new_pred]
-
-        if y_new_prob is not None:
-            result_df['Confidence'] = [
-                f"{prob:.2%}" if pred == 1 else f"{1 - prob:.2%}"
-                for pred, prob in zip(y_new_pred, y_new_prob)
-            ]
 
         st.dataframe(result_df, use_container_width=True)
 
