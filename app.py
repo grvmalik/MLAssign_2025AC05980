@@ -175,7 +175,7 @@ if page == "Home":
 
 # Page: Dataset
 elif page == "Dataset":
-    st.markdown("##Dataset Overview")
+    st.markdown("Dataset Overview")
     
     X, y, data = load_data()
     
@@ -217,7 +217,8 @@ elif page == "Dataset":
     
     st.subheader("Feature Statistics")
     st.dataframe(X.describe(), use_container_width=True)
-    
+
+    '''
     # Upload CSV option
     st.markdown("---")
     st.subheader("Upload Test Data")
@@ -227,10 +228,11 @@ elif page == "Dataset":
         st.success("File uploaded successfully!")
         st.write(f"Shape: {test_df.shape}")
         st.dataframe(test_df.head(), use_container_width=True)
-
+    '''
+        
 # Page: Model Training
 elif page == "Model Training":
-    st.markdown("## Model Training")
+    st.markdown("Model Training")
     
     X, y, _ = load_data()
     
@@ -285,7 +287,7 @@ elif page == "Model Training":
 
 # Page: Results Comparison
 elif page == "Results Comparison":
-    st.markdown("## Model Comparison")
+    st.markdown("Model Comparison")
     
     X, y, _ = load_data()
     X_train, X_test, y_train, y_test = train_test_split(
@@ -388,15 +390,30 @@ elif page == "Predictions":
         X = test_df.drop(columns=[target_col])
         y = test_df[target_col]
 
-    else:
         st.markdown("---")
-        st.markdown("## Make Predictions")
-
+        st.markdown("Dataset Overview")
+    
+        X, y, data = load_data()
+    
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("Total Instances", X.shape[0])
+        with col2:
+            st.metric("Total Features", X.shape[1])
+        with col3:
+            st.metric("Malignant Cases", sum(y == 0))
+        with col4:
+            st.metric("Benign Cases", sum(y == 1))
+    else:
+        #st.markdown("---")
+        #st.markdown("Make Predictions")
         X, y, _ = load_data()
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=42, stratify=y
+        )
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
-    )
+    st.markdown("---")
+    st.markdown("Make Predictions")    
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
