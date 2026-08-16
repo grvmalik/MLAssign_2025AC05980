@@ -217,8 +217,7 @@ elif page == "Dataset":
     
     st.subheader("Feature Statistics")
     st.dataframe(X.describe(), use_container_width=True)
-
-    '''
+    
     # Upload CSV option
     st.markdown("---")
     st.subheader("Upload Test Data")
@@ -228,8 +227,7 @@ elif page == "Dataset":
         st.success("File uploaded successfully!")
         st.write(f"Shape: {test_df.shape}")
         st.dataframe(test_df.head(), use_container_width=True)
-    '''
-        
+
 # Page: Model Training
 elif page == "Model Training":
     st.markdown("Model Training")
@@ -367,10 +365,16 @@ elif page == "Results Comparison":
 
 # Page: Predictions
 elif page == "Predictions":
-    # Upload CSV option
     st.markdown("---")
-    st.subheader("Upload Test Data")
+    st.subheader("Upload Test Data Only")
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+
+    # Only the TEST set changes depending on upload vs. split.
+    X_full, y_full, _ = load_data()
+    X_train, X_test_split, y_train, y_test_split = train_test_split(
+        X_full, y_full, test_size=0.2, random_state=42, stratify=y_full
+    )
+
     if uploaded_file is not None:
         test_df = pd.read_csv(uploaded_file)
         st.success("File uploaded successfully!")
@@ -378,56 +382,58 @@ elif page == "Predictions":
         st.dataframe(test_df.head(), use_container_width=True)
 
         st.markdown("---")
-        st.markdown("## Make Predictions")
+        st.markdown("Make Predictions")
 
-        # Let the user choose which column is the target
+        # Pick the target column BEFORE using it
         target_col = st.selectbox(
             "Select the target column (label)",
             options=test_df.columns,
             index=len(test_df.columns) - 1  # defaults to last column
         )
 
-        X = test_df.drop(columns=[target_col])
-        y = test_df[target_col]
+        X_test = test_df.drop(columns=[target_col])
+        y_test = test_df[target_col]
+
+        # Make sure uploaded features match what the model was trained on
+        missing_cols = set(X_train.columns) - set(X_test.columns)
+        if missing_cols:
+            st.error(f"Uploaded file is missing expected columns: {missing_cols}")
+            st.stop()
+        X_test = X_test[X_train.columns]  # reorder to match training
 
         st.markdown("---")
-        st.markdown("Dataset Overview")
-    
-        X, y, data = load_data()
-    
+        st.markdown("### Dataset Overview")
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            st.metric("Total Instances", X.shape[0])
+            st.metric("Total Instances", X_test.shape[0])
         with col2:
-            st.metric("Total Features", X.shape[1])
+            st.metric("Total Features", X_test.shape[1])
         with col3:
-            st.metric("Malignant Cases", sum(y == 0))
+            st.metric("Malignant Cases", int(sum(y_test == 0)))
         with col4:
-            st.metric("Benign Cases", sum(y == 1))
-    else:
-        #st.markdown("---")
-        #st.markdown("Make Predictions")
-        X, y, _ = load_data()
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42, stratify=y
-        )
+            st.metric("Benign Cases", int(sum(y_test == 1)))
 
-    st.markdown("---")
-    st.markdown("Make Predictions")    
+    else:
+        st.markdown("---")
+        st.markdown("Make Predictions")
+        # No upload -> fall back to the held-out split from the original data
+        X_test, y_test = X_test_split, y_test_split
+
+    # Fit scaler ONLY on training data, then transform both sets
     scaler = StandardScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
-    
-    models, metrics, predictions, probabilities = train_models(X_train, X_test, y_train, y_test)
-    
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
+
+    models, metrics, predictions, probabilities = train_models(
+        X_train_scaled, X_test_scaled, y_train, y_test
+    )
+
     # Model selection
     selected_model = st.selectbox("Select a Model:", list(models.keys()))
-    
+
     st.markdown("---")
-    
-    # Display metrics for selected model
     st.subheader(f"{selected_model} - Metrics")
-    
+
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Accuracy", f"{metrics[selected_model]['Accuracy']:.4f}")
@@ -435,7 +441,7 @@ elif page == "Predictions":
         st.metric("AUC Score", f"{metrics[selected_model]['AUC']:.4f}")
     with col3:
         st.metric("F1 Score", f"{metrics[selected_model]['F1']:.4f}")
-    
+
     col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("Precision", f"{metrics[selected_model]['Precision']:.4f}")
@@ -443,21 +449,21 @@ elif page == "Predictions":
         st.metric("Recall", f"{metrics[selected_model]['Recall']:.4f}")
     with col3:
         st.metric("MCC", f"{metrics[selected_model]['MCC']:.4f}")
-    
+
     st.markdown("---")
-    
+
     # Classification Report
     st.subheader("Classification Report")
     y_pred = predictions[selected_model]
     report = classification_report(y_test, y_pred, target_names=['Malignant', 'Benign'])
     st.text(report)
-    
+
     st.markdown("---")
-    
+
     # Confusion Matrix
     st.subheader("Confusion Matrix")
     cm = confusion_matrix(y_test, y_pred)
-    
+
     fig, ax = plt.subplots(figsize=(8, 6))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax,
                 xticklabels=['Malignant', 'Benign'],
