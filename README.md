@@ -41,7 +41,6 @@ The dataset contains 30 features representing diagnostic measurements such as:
 ## GitHub Repository Link
 
 **Repository:** [grvmalik/MLAssign_2025AC05980](https://github.com/grvmalik/MLAssign_2025AC05980)
-**Streamlit Link:** https://ml-2025ac05980.streamlit.app/
 
 **Repository Contents:**
 ```
@@ -105,14 +104,13 @@ ML-Classification-Assignment/
 
 ### Model Performance Comparison Table:
 
-| ML Model Name | Accuracy | AUC | Precision | Recall | F1 | MCC |
-|---------------|----------|-----|-----------|--------|----|----|
-| Logistic Regression | 0.9649 | 0.9925 | 0.9583 | 0.9688 | 0.9636 | 0.9211 |
-| Decision Tree | 0.9298 | 0.9296 | 0.9121 | 0.9479 | 0.9297 | 0.8536 |
-| K-Nearest Neighbor | 0.9474 | 0.9747 | 0.9463 | 0.9479 | 0.9471 | 0.8903 |
-| Naive Bayes | 0.9385 | 0.9768 | 0.9167 | 0.9583 | 0.9372 | 0.8717 |
-| Random Forest (Ensemble) | 0.9561 | 0.9941 | 0.9538 | 0.9583 | 0.9560 | 0.9087 |
-
+| Model               | Accuracy | AUC    | Precision | Recall | F1     | MCC    |
+|---------------------|----------|--------|-----------|--------|--------|--------|
+| Logistic Regression | 0.9825   | 0.9954 | 0.9861    | 0.9861 | 0.9861 | 0.9623 |
+| Decision Tree       | 0.9123   | 0.9157 | 0.9559    | 0.9028 | 0.9286 | 0.8174 |
+| K-Nearest Neighbor  | 0.9561   | 0.9788 | 0.9589    | 0.9722 | 0.9655 | 0.9054 |
+| Naive Bayes         | 0.9298   | 0.9868 | 0.9444    | 0.9444 | 0.9444 | 0.8492 |
+| Random Forest       | 0.9561   | 0.9939 | 0.9589    | 0.9722 | 0.9655 | 0.9054 |
 ---
 
 ### Observations on Model Performance:
@@ -125,7 +123,7 @@ ML-Classification-Assignment/
 | Naive Bayes | **Solid performance despite independence assumption.** Achieved 93.85% accuracy and highest recall (95.83%), making it excellent for minimizing false negatives. The independence assumption doesn't severely hurt performance. AUC score (0.9768) indicates strong discriminative ability. Lower precision suggests more false positives. |
 | Random Forest (Ensemble) | **Best overall model.** Achieved highest AUC score (0.9941) and strong accuracy (95.61%). Ensemble method effectively reduces overfitting compared to single decision tree. Balanced performance across all metrics (F1: 0.9560, MCC: 0.9087). Provides feature importance rankings and most robust for production use. |
 
-**Overall Winner for this dataset:** **Random Forest (Ensemble)** - Best AUC (0.9941), balanced metrics, robust to overfitting, and most suitable for real-world deployment.
+**Overall Winner for this dataset:** **Logistic Regression** - Best AUC (0.9954), balanced metrics, robust to overfitting, and most suitable for real-world deployment.
 
 ---
 ## Model Training Results
@@ -133,8 +131,8 @@ ML-Classification-Assignment/
 All models were trained on the training set (455 samples) and evaluated on test set (114 samples).
 
 ### Key Findings:
-- All models achieved >92% accuracy
-- High AUC scores (>0.92) indicate excellent class separation
+- All models achieved >91% accuracy
+- High AUC scores (>0.91) indicate excellent class separation
 - Random Forest provides best balance of metrics
 - Feature scaling was crucial for KNN and Logistic Regression
 - No significant overfitting observed
@@ -176,4 +174,12 @@ Main Jupyter notebook containing:
 - Visualizations (performance charts, confusion matrices)
 - Test data generation
 - Ready to run on BITS Virtual Lab
+
+
+## Streamlit Deployment Link
+**Streamlit Link:** https://ml-2025ac05980.streamlit.app/
+ 
+
+ 
+ 
 
