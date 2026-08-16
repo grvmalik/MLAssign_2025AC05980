@@ -32,11 +32,11 @@ The dataset contains 30 features representing diagnostic measurements such as:
 - symmetry, fractal dimension (mean, standard error, worst)
 
 **Dataset Suitability:**
-- ✓ Exceeds minimum feature requirement (30 > 12)
-- ✓ Exceeds minimum instance requirement (569 > 500)
-- ✓ Binary classification problem (suitable for all assigned models)
-- ✓ No missing values, clean and preprocessed
-- ✓ Well-balanced target classes
+- Exceeds minimum feature requirement (30 > 12)
+- Exceeds minimum instance requirement (569 > 500)
+- Binary classification problem (suitable for all assigned models)
+- No missing values, clean and preprocessed
+- Well-balanced target classes
 
 ## GitHub Repository Link
 
