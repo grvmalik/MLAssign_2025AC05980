@@ -396,8 +396,8 @@ elif page == "Predictions":
     st.markdown("---")
 
     st.subheader("Classification Report")
-    y_pred = predictions[selected_model]
-    report = classification_report(y_test, y_pred, target_names=['Malignant', 'Benign'])
+    y_pred_split = predictions[selected_model]
+    report = classification_report(y_test, y_pred_split, target_names=['Malignant', 'Benign'])
     st.code(report, language=None)
 
     st.markdown("---")
