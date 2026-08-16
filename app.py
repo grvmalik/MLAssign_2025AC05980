@@ -175,7 +175,7 @@ if page == "Home":
 
 # Page: Dataset
 elif page == "Dataset":
-    st.markdown("Dataset Overview")
+    st.markdown("## Dataset Overview")
     
     X, y, data = load_data()
     
@@ -218,19 +218,10 @@ elif page == "Dataset":
     st.subheader("Feature Statistics")
     st.dataframe(X.describe(), use_container_width=True)
     
-    # Upload CSV option
-    st.markdown("---")
-    st.subheader("Upload Test Data")
-    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
-    if uploaded_file is not None:
-        test_df = pd.read_csv(uploaded_file)
-        st.success("File uploaded successfully!")
-        st.write(f"Shape: {test_df.shape}")
-        st.dataframe(test_df.head(), use_container_width=True)
 
 # Page: Model Training
 elif page == "Model Training":
-    st.markdown("Model Training")
+    st.markdown("## Model Training")
     
     X, y, _ = load_data()
     
@@ -285,7 +276,7 @@ elif page == "Model Training":
 
 # Page: Results Comparison
 elif page == "Results Comparison":
-    st.markdown("Model Comparison")
+    st.markdown("## Model Comparison")
     
     X, y, _ = load_data()
     X_train, X_test, y_train, y_test = train_test_split(
@@ -365,60 +356,14 @@ elif page == "Results Comparison":
 
 # Page: Predictions
 elif page == "Predictions":
-    st.subheader("Upload Test Data Only")
-    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+    st.markdown("## Model Predictions")
+    st.subheader("Model Evaluation on basis of Train-Test Split")
 
-    # Only the TEST set changes depending on upload vs. split.
     X_full, y_full, _ = load_data()
-    X_train, X_test_split, y_train, y_test_split = train_test_split(
+    X_train, X_test, y_train, y_test = train_test_split(
         X_full, y_full, test_size=0.2, random_state=42, stratify=y_full
     )
 
-    if uploaded_file is not None:
-        test_df = pd.read_csv(uploaded_file)
-        st.success("File uploaded successfully!")
-        st.write(f"Shape: {test_df.shape}")
-        st.dataframe(test_df.head(), use_container_width=True)
-
-        st.markdown("---")
-        st.markdown("Make Predictions")
-
-        # Pick the target column BEFORE using it
-        target_col = st.selectbox(
-            "Select the target column (label)",
-            options=test_df.columns,
-            index=len(test_df.columns) - 1  # defaults to last column
-        )
-
-        X_test = test_df.drop(columns=[target_col])
-        y_test = test_df[target_col]
-
-        # Make sure uploaded features match what the model was trained on
-        missing_cols = set(X_train.columns) - set(X_test.columns)
-        if missing_cols:
-            st.error(f"Uploaded file is missing expected columns: {missing_cols}")
-            st.stop()
-        X_test = X_test[X_train.columns]  # reorder to match training
-
-        st.markdown("---")
-        st.markdown("### Dataset Overview")
-        col1, col2, col3, col4 = st.columns(4)
-        with col1:
-            st.metric("Total Instances", X_test.shape[0])
-        with col2:
-            st.metric("Total Features", X_test.shape[1])
-        with col3:
-            st.metric("Malignant Cases", int(sum(y_test == 0)))
-        with col4:
-            st.metric("Benign Cases", int(sum(y_test == 1)))
-
-    else:
-        st.markdown("---")
-        st.markdown("Make Predictions")
-        # No upload -> fall back to the held-out split from the original data
-        X_test, y_test = X_test_split, y_test_split
-
-    # Fit scaler ONLY on training data, then transform both sets
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
@@ -427,7 +372,6 @@ elif page == "Predictions":
         X_train_scaled, X_test_scaled, y_train, y_test
     )
 
-    # Model selection
     selected_model = st.selectbox("Select a Model:", list(models.keys()))
 
     st.markdown("---")
@@ -451,17 +395,18 @@ elif page == "Predictions":
 
     st.markdown("---")
 
-    # Classification Report
     st.subheader("Classification Report")
-    y_pred = predictions[selected_model]
-    report = classification_report(y_test, y_pred, target_names=['Malignant', 'Benign'])
-    st.code(report, language=None)
+    y_pred_split = predictions[selected_model]
+    report_dict = classification_report(
+        y_test, y_pred_split, target_names=['Malignant', 'Benign'], output_dict=True
+    )
+    report_df = pd.DataFrame(report_dict).transpose().round(3)
+    st.dataframe(report_df, use_container_width=True)
 
     st.markdown("---")
 
-    # Confusion Matrix
     st.subheader("Confusion Matrix")
-    cm = confusion_matrix(y_test, y_pred)
+    cm = confusion_matrix(y_test, y_pred_split)
 
     fig, ax = plt.subplots(figsize=(8, 6))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', ax=ax,
@@ -472,6 +417,67 @@ elif page == "Predictions":
     ax.set_ylabel('True Label', fontsize=12)
     ax.set_xlabel('Predicted Label', fontsize=12)
     st.pyplot(fig)
+
+
+    st.markdown("---")
+    st.subheader("Predict on Uploaded Data")
+    st.caption("Upload a CSV of test data only to get predictions")
+
+    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+
+    if uploaded_file is not None:
+        new_df = pd.read_csv(uploaded_file)
+        st.success("File uploaded successfully!")
+        st.write(f"Shape: {new_df.shape}")
+        st.dataframe(new_df.head(), use_container_width=True)
+
+        # Align uploaded columns with training feature columns
+        missing_cols = set(X_train.columns) - set(new_df.columns)
+        extra_cols = set(new_df.columns) - set(X_train.columns)
+
+        if missing_cols:
+            st.error(f"Uploaded file is missing expected feature columns: {missing_cols}")
+            st.stop()
+
+        if extra_cols:
+            st.warning(f"Ignoring unexpected extra columns: {extra_cols}")
+
+        X_new = new_df[X_train.columns]  # keep only expected features, correct order
+
+        X_new_scaled = scaler.transform(X_new)
+        model = models[selected_model]
+
+        y_new_pred = model.predict(X_new_scaled)
+        y_new_prob = (model.predict_proba(X_new_scaled)[:, 1]
+                      if hasattr(model, "predict_proba") else None)
+
+        st.markdown("### Prediction Results")
+        result_df = new_df.copy()
+        result_df['Prediction'] = ['Malignant' if p == 0 else 'Benign' for p in y_new_pred]
+
+        if y_new_prob is not None:
+            result_df['Confidence'] = [
+                f"{prob:.2%}" if pred == 1 else f"{1 - prob:.2%}"
+                for pred, prob in zip(y_new_pred, y_new_prob)
+            ]
+
+        st.dataframe(result_df, use_container_width=True)
+
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Total Predictions", len(y_new_pred))
+        with col2:
+            st.metric("Predicted Malignant", int(sum(y_new_pred == 0)))
+        with col3:
+            st.metric("Predicted Benign", int(sum(y_new_pred == 1)))
+
+        st.markdown("### Prediction Distribution")
+        pred_counts = pd.Series(y_new_pred).map({0: 'Malignant', 1: 'Benign'}).value_counts()
+        fig2, ax2 = plt.subplots(figsize=(6, 4))
+        pred_counts.plot(kind='bar', color=['#e74c3c', '#2ecc71'], ax=ax2)
+        ax2.set_ylabel("Count")
+        ax2.set_title(f"Predicted Class Distribution ({selected_model})")
+        st.pyplot(fig2)
 
 # Page: About
 elif page == "About":
