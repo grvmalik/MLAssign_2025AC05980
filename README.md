@@ -41,6 +41,7 @@ The dataset contains 30 features representing diagnostic measurements such as:
 ## GitHub Repository Link
 
 **Repository:** [grvmalik/MLAssign_2025AC05980](https://github.com/grvmalik/MLAssign_2025AC05980)
+**Streamlit Link:** https://ml-2025ac05980.streamlit.app/
 
 **Repository Contents:**
 ```
