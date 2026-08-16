@@ -117,11 +117,11 @@ ML-Classification-Assignment/
 
 | ML Model Name | Observation about model performance |
 |---------------|-----------------------------------|
-| Logistic Regression | **Excellent overall performance.** Achieved highest accuracy (96.49%) and strong AUC (0.9925). The linear decision boundary works well for this dataset. Shows good generalization with high precision (95.83%) and recall (96.88%). Best for interpretability and production deployment. |
+| Logistic Regression | **Best overall model.** Achieved highest accuracy (96.49%) and strong AUC (0.9925). The linear decision boundary works well for this dataset. Shows good generalization with high precision (95.83%) and recall (96.88%). Best for interpretability and production deployment. |
 | Decision Tree | **Good but shows signs of complexity.** Despite controlled depth (max_depth=10), slightly lower accuracy (92.98%). The model may still be capturing dataset-specific patterns. Shows good recall (94.79%) but lower precision (91.21%), indicating some false positives. Consider pruning for better generalization. |
 | K-Nearest Neighbor | **Strong performance with stable metrics.** Achieved 94.74% accuracy with balanced precision and recall. Effective with feature scaling applied. The non-parametric approach captures local patterns well. Performance depends heavily on hyperparameter k=5. Consider k-fold validation for k selection. |
 | Naive Bayes | **Solid performance despite independence assumption.** Achieved 93.85% accuracy and highest recall (95.83%), making it excellent for minimizing false negatives. The independence assumption doesn't severely hurt performance. AUC score (0.9768) indicates strong discriminative ability. Lower precision suggests more false positives. |
-| Random Forest (Ensemble) | **Best overall model.** Achieved highest AUC score (0.9941) and strong accuracy (95.61%). Ensemble method effectively reduces overfitting compared to single decision tree. Balanced performance across all metrics (F1: 0.9560, MCC: 0.9087). Provides feature importance rankings and most robust for production use. |
+| Random Forest (Ensemble) | **Excellent overall model.** Achieved highest AUC score (0.9941) and strong accuracy (95.61%). Ensemble method effectively reduces overfitting compared to single decision tree. Balanced performance across all metrics (F1: 0.9560, MCC: 0.9087). Provides feature importance rankings and most robust for production use. |
 
 **Overall Winner for this dataset:** **Logistic Regression** - Best AUC (0.9954), balanced metrics, robust to overfitting, and most suitable for real-world deployment.
 
