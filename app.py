@@ -365,9 +365,35 @@ elif page == "Results Comparison":
 
 # Page: Predictions
 elif page == "Predictions":
-    st.markdown("## Make Predictions")
-    
-    X, y, _ = load_data()
+    # Upload CSV option
+    st.markdown("---")
+    st.subheader("Upload Test Data")
+    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+    if uploaded_file is not None:
+        test_df = pd.read_csv(uploaded_file)
+        st.success("File uploaded successfully!")
+        st.write(f"Shape: {test_df.shape}")
+        st.dataframe(test_df.head(), use_container_width=True)
+
+        st.markdown("---")
+        st.markdown("## Make Predictions")
+
+        # Let the user choose which column is the target
+        target_col = st.selectbox(
+            "Select the target column (label)",
+            options=test_df.columns,
+            index=len(test_df.columns) - 1  # defaults to last column
+        )
+
+        X = test_df.drop(columns=[target_col])
+        y = test_df[target_col]
+
+    else:
+        st.markdown("---")
+        st.markdown("## Make Predictions")
+
+        X, y, _ = load_data()
+
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, random_state=42, stratify=y
     )
