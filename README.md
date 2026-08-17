@@ -44,7 +44,7 @@ The dataset contains 30 features representing diagnostic measurements such as:
 
 **Repository Contents:**
 ```
-ML-Classification-Assignment/
+MLAssign_2025AC05980/
 ├── app.py                                      # Streamlit web application
 ├── requirements.txt                            # Project dependencies
 ├── README.md                                   # This file
